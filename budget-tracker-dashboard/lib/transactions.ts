@@ -41,7 +41,6 @@ function getDateRange(range: DateRange): { from: string | null; to: string | nul
 }
 
 export async function fetchTransactions(
-  telegramUserId: number,
   dateRange: DateRange,
   filter: TransactionFilter,
   search: string
@@ -51,7 +50,6 @@ export async function fetchTransactions(
     .select(
       "id, telegram_user_id, telegram_message_id, transaction_type, amount, currency, merchant, category, subcategory, transaction_date, payment_method, description, raw_message, ai_confidence, created_at"
     )
-    .eq("telegram_user_id", telegramUserId)
     .order("transaction_date", { ascending: false })
     .order("created_at", { ascending: false });
 

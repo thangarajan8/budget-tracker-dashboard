@@ -16,9 +16,7 @@ import { TransactionFilters } from "./transaction-filters";
 import { MonthlyTrend } from "./monthly-trend";
 import { SummaryCardsSkeleton, ChartSkeleton, TransactionListSkeleton } from "./skeleton";
 
-type Props = { telegramUserId: number };
-
-export function Dashboard({ telegramUserId }: Props) {
+export function Dashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,14 +27,14 @@ export function Dashboard({ telegramUserId }: Props) {
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
-    const { data, error: err } = await fetchTransactions(telegramUserId, dateRange, filter, search);
+    const { data, error: err } = await fetchTransactions(dateRange, filter, search);
     if (err) {
       setError(err);
     } else {
       setTransactions(data ?? []);
     }
     setLoading(false);
-  }, [telegramUserId, dateRange, filter, search]);
+  }, [dateRange, filter, search]);
 
   useEffect(() => {
     const timer = setTimeout(load, search ? 400 : 0);
